@@ -92,6 +92,12 @@ Leave empty.
 
 Leave empty (unless timelapse-specific macros are added).
 
+### Change filament G-code (optional)
+
+```gcode
+M600
+```
+
 ## Extruder 1 Tab
 
 ### Size and Position
@@ -157,13 +163,13 @@ Leave empty (unless timelapse-specific macros are added).
 
 | Setting | Value |
 |---|---|
-| Maximum acceleration X | `3000 mm/s^2` |
-| Maximum acceleration Y | `3000 mm/s^2` |
+| Maximum acceleration X | `4000 mm/s^2` |
+| Maximum acceleration Y | `4000 mm/s^2` |
 | Maximum acceleration Z | `30 mm/s^2` |
 | Maximum acceleration E | `2000 mm/s^2` |
 | Maximum acceleration for extruding | `1000 mm/s^2` |
 | Maximum acceleration for retracting | `1000 mm/s^2` |
-| Maximum acceleration for travel | `5000 mm/s^2` |
+| Maximum acceleration for travel | `4000 mm/s^2` |
 
 ### Jerk Limitation
 
@@ -176,12 +182,20 @@ Leave empty (unless timelapse-specific macros are added).
 
 ## Klipper Macro and Limits Alignment
 
-- `START_PRINT` expects `BED` and `EXTRUDER` parameters, with optional `MESH`.
+- `START_PRINT` expects `BED` and `EXTRUDER`, with optional `MESH` and `MATERIAL`.
+- `START_PRINT` uses standby nozzle heating during homing, then reheats to print temperature before purge lines.
 - `END_PRINT` is defined in `macroses.cfg`.
+- `PAUSE`, `RESUME`, and `M600` are defined in `macroses.cfg` for safer park/retract/resume behavior.
+- BLTouch probing in `printer.cfg` is tuned for stability:
+  - `speed: 3.0`
+  - `samples_tolerance: 0.02`
+  - `samples_tolerance_retries: 4`
+  - `sample_retract_dist: 3.0`
 - Slicer speed and acceleration limits match `printer.cfg` machine limits:
   - `max_velocity: 150`
-  - `max_accel: 3000`
+  - `max_accel: 4000`
   - `max_z_velocity: 5`
   - `max_z_accel: 30`
+  - `square_corner_velocity: 5.0`
   - `max_extrude_only_velocity: 15`
   - `max_extrude_only_accel: 2000`
