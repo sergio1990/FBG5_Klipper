@@ -64,6 +64,14 @@ This document captures the active Orca Slicer printer profile for the Flying Bea
 START_PRINT BED=[hot_plate_temp_initial_layer] EXTRUDER=[nozzle_temperature_initial_layer] MESH=default
 ```
 
+The macro waits 300 seconds by default after the bed reaches printing temperature and before it re-homes Z. To override the bed stabilization wait, pass `STABILIZE_TIME` in seconds:
+
+```gcode
+START_PRINT BED=[hot_plate_temp_initial_layer] EXTRUDER=[nozzle_temperature_initial_layer] MESH=default STABILIZE_TIME=300
+```
+
+Use `STABILIZE_TIME=0` to start without the extra wait.
+
 ### Machine end G-code
 
 ```gcode
@@ -182,8 +190,9 @@ M600
 
 ## Klipper Macro and Limits Alignment
 
-- `START_PRINT` expects `BED` and `EXTRUDER`, with optional `MESH` and `MATERIAL`.
+- `START_PRINT` expects `BED` and `EXTRUDER`, with optional `MESH`, `MATERIAL`, and `STABILIZE_TIME`.
 - `START_PRINT` uses standby nozzle heating during homing, then reheats to print temperature before purge lines.
+- `STABILIZE_TIME` defaults to `300` seconds and waits after the bed reaches printing temperature, before the final Z re-home. Set `STABILIZE_TIME=0` to disable the bed soak.
 - `END_PRINT` is defined in `macroses.cfg`.
 - `PAUSE`, `RESUME`, and `M600` are defined in `macroses.cfg` for safer park/retract/resume behavior.
 - BLTouch probing in `printer.cfg` is tuned for stability:
