@@ -7,7 +7,7 @@ This repository contains Klipper-related configuration and notes for a modified 
 - Flying Bear Ghost 5
 - MKS Robin Nano v1.2 motherboard
 - Direct drive mod
-- Filament sensor enabled
+- Filament sensor configured, runout pause currently disabled
 
 ## Control and Web Interfaces
 
